@@ -1,0 +1,58 @@
+base de datos: dakiti
+
+tablas: - Roles
+- tipo de documento
+- usuarios
+
+contenido de tablas:
+- roles
+id_rol - primary key
+nombre
+
+- tipo de documento
+id_documento - primary key
+nombre
+
+-usuario
+id_usuario - primary key
+id_rol - foreing key
+id_documento - foreing key
+numero_documento
+nombres
+correo
+password
+
+/* SCRIPT BD */
+
+CREATE DATABASE IF NOT EXISTS dakiti;
+
+-- Seleccionar la base de datos
+USE dakiti;
+
+-- Crear la tabla Roles
+CREATE TABLE IF NOT EXISTS Roles (
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL
+);
+
+-- Insertar datos en la tabla Roles
+INSERT INTO Roles (nombre) VALUES ('Administrador'), ('Usuario');
+
+-- Crear la tabla TipoDocumento
+CREATE TABLE IF NOT EXISTS TipoDocumento (
+    id_documento INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL
+);
+
+-- Crear la tabla Usuarios
+CREATE TABLE IF NOT EXISTS Usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    id_rol INT,
+    id_documento INT,
+    numero_documento VARCHAR(20) NOT NULL,
+    nombres VARCHAR(255) NOT NULL,
+    correo VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_rol) REFERENCES Roles(id_rol),
+    FOREIGN KEY (id_documento) REFERENCES TipoDocumento(id_documento)
+);
